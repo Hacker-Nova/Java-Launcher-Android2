@@ -6,21 +6,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # v3 ki jagah v4
+      - uses: actions/checkout@v4
       - name: set up JDK 17
-        uses: actions/setup-java@v4 # v3 ki jagah v4
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3 # v2 ki jagah v3
       
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      
+      # Permissions fix karne ke liye
+      - name: Make Gradle Executable
+        run: chmod +x gradlew || true
+
       - name: Build with Gradle
-        run: gradle assembleDebug 
+        run: gradle assembleDebug --stacktrace
         
       - name: Upload APK
-        uses: actions/upload-artifact@v4 # Sabse zaroori change v4
+        uses: actions/upload-artifact@v4
         with:
           name: java-launcher-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: "**/*.apk"
           
