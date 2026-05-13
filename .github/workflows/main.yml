@@ -14,8 +14,11 @@ jobs:
           distribution: 'temurin'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
+      
+      # Bina wrapper ke build karne ke liye command
       - name: Build with Gradle
-        run: chmod +x gradlew && ./gradlew assembleDebug
+        run: gradle assembleDebug 
+        
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
